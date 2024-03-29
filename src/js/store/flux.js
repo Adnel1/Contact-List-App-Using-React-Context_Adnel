@@ -1,3 +1,5 @@
+import { useRouteLoaderData } from "react-router";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -19,13 +21,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					close: false
 				}
 			],
-			contacts: []
+			contacts: [],
+			modalOpen: false,
+			contactId: ""
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			// This function loads the data currently on the API
 			loadSomeData: () => {
 				fetch('https://playground.4geeks.com/apis/fake/contact/agenda/adnel_agenda')
 				.then(resp => resp.json())
@@ -37,9 +42,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					error => console.error("There was an error: ", error)
 				)
 			},
+			// This function pushes data to the API
 			pushSomeData: (inputName, inputEmail, inputAddress, inputPhone) => {
-				console.log("It Works!!!");
-
 				fetch('https://playground.4geeks.com/apis/fake/contact/', {
 				method: "POST",
 				body: JSON.stringify({
@@ -57,8 +61,77 @@ const getState = ({ getStore, getActions, setStore }) => {
 					error => console.error("There was an error: ", error)
 				)
 			},
-			deleteSomeData: () => {
-				console.log("This will delete some data");
+			// This function updates a contact data
+			updateContactData: (inputName, inputEmail, inputAddress, inputPhone) => {
+				console.log("This is the update contact function test")
+
+				const store = getStore();
+				const id = store.contactId;
+
+				fetch('https://playground.4geeks.com/apis/fake/contact/' + id, {
+					method: "PUT",
+					body: JSON.stringify({
+						"full_name": inputName,
+						"email": inputEmail,
+						"agenda_slug": "adnel_agenda",
+						"address": inputAddress,
+						"phone": inputPhone
+					}),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+				.then(resp => {
+					if (!resp.ok) throw Error(resp.statusText);
+					return resp.json(); // Return JSON data from the response
+				})
+				.then(result => {
+					console.log("Success", result);
+				})
+				.catch(error => {
+					console.log(error);
+				});
+			},
+			// This function deletes data from the API and then refreshes the page
+			deleteSomeData: (state) => {
+				const store = getStore();
+				const id = store.contactId;
+
+				fetch('https://playground.4geeks.com/apis/fake/contact/' + id, {
+					method: "DELETE",
+					body: JSON.stringify(id),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+				.then(resp => {
+					if (!resp.ok) throw Error(resp.statusText);
+					return resp.json(); // Return JSON data from the response
+				})
+				.then(result => {
+					console.log("Success", result);
+				})
+				.catch(error => {
+					console.log(error);
+				});				
+				
+				window.location.reload();
+
+				setStore(
+					{
+						modalOpen: state
+					}
+				);
+
+			},
+			// This function toggles the modal
+			toggleModal: (state, contactId) => {
+				setStore(
+					{
+						modalOpen: state, 
+						contactId
+					}
+				)
 			},
 			changeColor: (index, color) => {
 				//get the store
