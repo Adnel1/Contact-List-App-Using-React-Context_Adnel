@@ -62,20 +62,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				)
 			},
 			// This function updates a contact data
-			updateContactData: (inputName, inputEmail, inputAddress, inputPhone) => {
-				console.log("This is the update contact function test")
-
+			updateContactData: (inputNameUpdate, inputEmailUpdate, inputAddressUpdate, inputPhoneUpdate) => {
 				const store = getStore();
 				const id = store.contactId;
 
 				fetch('https://playground.4geeks.com/apis/fake/contact/' + id, {
 					method: "PUT",
 					body: JSON.stringify({
-						"full_name": inputName,
-						"email": inputEmail,
+						"full_name": inputNameUpdate,
+						"email": inputEmailUpdate,
 						"agenda_slug": "adnel_agenda",
-						"address": inputAddress,
-						"phone": inputPhone
+						"address": inputAddressUpdate,
+						"phone": inputPhoneUpdate
 					}),
 					headers: {
 						"Content-Type": "application/json"
@@ -91,6 +89,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch(error => {
 					console.log(error);
 				});
+
 			},
 			// This function deletes data from the API and then refreshes the page
 			deleteSomeData: (state) => {

@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
-import "../../styles/add-contact.css";
-
 export const EditContact = () => {
 	const {store, actions} = useContext(Context);
-	const [ inputName, setInputName ] = useState("");
-	const [ inputEmail, setInputEmail ] = useState("");
-	const [ inputPhone, setInputPhone ] = useState("");
-	const [ inputAddress, setInputAdress ] = useState("");
+	const [ inputNameUpdate, setInputNameUpdate ] = useState("");
+	const [ inputEmailUpdate, setInputEmailUpdate ] = useState("");
+	const [ inputPhoneUpdate, setInputPhoneUpdate ] = useState("");
+	const [ inputAddressUpdate, setInputAdressUpdate ] = useState("");
 
 	return (
 		<div className="d-flex align-items-center flex-column">
@@ -19,21 +17,21 @@ export const EditContact = () => {
 				<form className="mb-3">
 					<div className="form-group mb-3">
 						<label htmlFor="inputEmail4">Full Name</label>
-						<input onChange={(event) => setInputName(event.target.value)} value={inputName} type="text" className="form-control" placeholder="John Smith"></input>
+						<input onChange={(event) => setInputNameUpdate(event.target.value)} value={inputNameUpdate} type="text" className="form-control" placeholder="John Smith"></input>
 					</div>
 					<div className="form-row mb-3">
 						<label htmlFor="inputPassword4">Email</label>
-						<input onChange={(event) => setInputEmail(event.target.value)} value={inputEmail} type="email" className="form-control" placeholder="example@email.com"></input>
+						<input onChange={(event) => setInputEmailUpdate(event.target.value)} value={inputEmailUpdate} type="email" className="form-control" placeholder="example@email.com"></input>
 					</div>
 					<div className="form-row mb-3">
 						<label htmlFor="inputAddress">Phone</label>
-						<input onChange={(event) => setInputPhone(event.target.value)} value={inputPhone} type="text" className="form-control" placeholder="555 555 555"></input>
+						<input onChange={(event) => setInputPhoneUpdate(event.target.value)} value={inputPhoneUpdate} type="text" className="form-control" placeholder="555 555 555"></input>
 					</div>
 					<div className="form-row mb-3">
 						<label htmlFor="inputAddress">Address</label>
-						<input onChange={(event) => setInputAdress(event.target.value)} value={inputAddress} type="text" className="form-control" placeholder="1234 Main St"></input>
+						<input onChange={(event) => setInputAdressUpdate(event.target.value)} value={inputAddressUpdate} type="text" className="form-control" placeholder="1234 Main St"></input>
 					</div>
-					<button onClick={() => actions.updateContactData(inputName, inputEmail, inputAddress, inputPhone)} type="submit" className="btn btn-primary col-12">Update</button>
+					<button onClick={() => actions.updateContactData(inputNameUpdate, inputEmailUpdate, inputAddressUpdate, inputPhoneUpdate)} type="submit" className="btn btn-primary col-12">Update</button>
 				</form>
 				<Link to="/">
 					<button className="btn btn-secondary col-12">Back to contacts</button>

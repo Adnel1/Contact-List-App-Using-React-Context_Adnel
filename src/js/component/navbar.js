@@ -12,8 +12,6 @@ export const Navbar = () => {
 				<div className="collapse navbar-collapse" id="navbarNavAltMarkup">
 					<div className="navbar-nav">
 					<a className="nav-item nav-link active" href="#">Home <span className="sr-only">(current)</span></a>
-					<a className="nav-item nav-link disabled" href="#">Features</a>
-					<a className="nav-item nav-link disabled" href="#">Pricing</a>
 					</div>
 				</div>
 			</div>
